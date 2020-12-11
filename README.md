@@ -1,12 +1,12 @@
 ## PostgreSQL STIG Automated Compliance Validation Profile
-<b>PostgreSQL</b> Version 9.X <b>
+<b>PostgreSQL 9.X</b>
 
-<b>PostgreSQL</b> STIG Automated Compliance Validation Profile works with Chef InSpec to perform automated compliance checks of <b>PostgreSQL</b>.
+<b>PostgreSQL 9.X</b> STIG Automated Compliance Validation Profile works with Chef InSpec to perform automated compliance checks of <b>PostgreSQL</b>.
 
 This automated Security Technical Implementation Guide (STIG) validator was developed to reduce the time it takes to perform a security check based upon STIG Guidance from DISA. These check results should provide information needed to receive a secure authority to operate (ATO) certification for the applicable technology.
 <b>PostgreSQL</b> uses [Chef InSpec](https://github.com/chef/inspec), which provides an open source compliance, security and policy testing framework that dynamically extracts system configuration information.
 
-## PostgreSQL  STIG Overview
+## PostgreSQL STIG Overview
 
 The <b>PostgreSQL</b> STIG (https://public.cyber.mil/stigs/) by the United States Defense Information Systems Agency (DISA) offers a comprehensive compliance guide for the configuration and operation of various technologies.
 DISA has created and maintains a set of security guidelines for applications, computer systems or networks connected to the DoD. These guidelines are the primary security standards used by many DoD agencies. In addition to defining security guidelines, the STIG also stipulates how security training should proceed and when security checks should occur. Organizations must stay compliant with these guidelines or they risk having their access to the DoD terminated.
@@ -17,76 +17,68 @@ The requirements associated with the <b>PostgreSQL</b> STIG are derived from the
 
 While the PostgreSQL STIG automation profile check was developed to provide technical guidance to validate information with security systems such as applications, the guidance applies to all organizations that need to meet internal security as well as compliance standards.
 
+### This STIG Automated Compliance Validation Profile was developed based upon:
+- PostgreSQL Security Technical Implementation Guide
+
+
 ## Getting Started
 
-### Setup Environment on STIG Validation Execution Host
+### Requirements
 
+#### PostgreSQL  
+- PostgreSQL
+- Access to the database
+- Account providing appropriate permissions to perform audit scan
+
+
+#### Required software on PostgreSQL machine
+- git
+- [InSpec](https://www.chef.io/products/chef-inspec/)
+
+### Setup Environment on PostgreSQL machine 
 #### Install InSpec
-Goto https://www.inspec.io/downloads/ and consult the documentation for you Operating System to download and install InSpec.
+Goto https://www.inspec.io/downloads/ and consult the documentation for your Operating System to download and install InSpec.
 
-#### Ensure your InSpec version is at least 4.23.10 <b>[update or remove section based upon technology]</b>
+#### Ensure InSpec version is at least 4.23.10 
 ```sh
 inspec --version
 ```
 
-### Setting inputs in inspec.yml 
-
-For more information on different options with inputs, refer to: https://docs.chef.io/inspec/inputs/
-
-```yaml
-name: my_profile
-inputs:
-- name: webserver_user # Name is the only required field
-- name: favorite_fruit
-value: banana # You can set a value; priority is 30 for metadata
-- name: meaning_of_life
-type: Numeric
-value: 42
-required: true
-priority: 70
-sensitive: true
-
-```
-
-### How to execute this instance 
+### How to execute this instance  
 (See: https://www.inspec.io/docs/reference/cli/)
 
 #### Execute a single Control in the Profile 
-
-**Note**: replace the profile's directory name - e.g. - `<Profile>` with `.` if you are in the profile's root directory.
-
+**Note**: Replace the profile's directory name - e.g. - `<Profile>` with `.` if currently in the profile's root directory.
 ```sh
-inspec exec <Profile>/controls/V-214048.rb -t docker://<name_of_container>
+inspec exec <Profile>/controls/V-72841.rb --show-progress
+```
+or use the --controls flag to execute checking with a subset of controls
+```sh
+inspec exec <Profile> --controls=V-72841.rb V-72845.rb --show-progress
 ```
 
-or use the `--controls` flag
+#### Execute a Single Control and save results as JSON 
 ```sh
-inspec exec <Profile> --controls=V-214048.rb V-214049.rb -t docker://<name_of_docker_container>
-```
-
-#### Execute a Single Control and save results as JSON with the name of the JSON file as results.json
-```sh
-inspec exec <Profile> --controls=V-214048.rb -t docker://<name_of_docker_container> --reporter json:results.json
+inspec exec <Profile> --controls=V-72841.rb --show-progress --reporter json:results.json
 ```
 
 #### Execute All Controls in the Profile 
 ```sh
-inspec exec <Profile> -t docker://<name_of_docker_container>
+inspec exec <Profile> --show-progress
 ```
 
 #### Execute all the Controls in the Profile and save results as JSON 
 ```sh
-inspec exec <Profile> -t docker://<name_of_docker_container> --reporter json:results.json
+inspec exec <Profile> --show-progress  --reporter json:results.json
 ```
 
-## Check Overview:  
-Check Overview:
+## Check Overview:
 
 **Manual Checks**
 
 These checks are not included in the automation process.
 
-| Control   Number | Description Visual Validation                                                                                                                                                                                                                  |
+| Control   Number | Description                                                                                                                                                                                                                  |
 |------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | V-72841          | PostgreSQL   must be configured to prohibit or restrict the use of organization-defined   functions, ports, protocols, and/or services, as defined in the PPSM CAL and   vulnerability assessments.                                            |
 | V-72845          | Security-relevant   software updates to PostgreSQL must be installed within the time period   directed by an authoritative source (e.g., IAVM, CTOs, DTMs, and STIGs).                                                                         |
@@ -142,7 +134,7 @@ These checks are not included in the automation process.
 
 These checks will follow the normal automation process and will report accurate STIG compliance PASS/FAIL.
 
-| Control   Number | Description Normal                                                                                                                                                                                                                                                               |
+| Control   Number | Description                                                                                                                                                                                                                                                                |
 |------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | V-72843          | PostgreSQL must produce audit records containing sufficient   information to establish the outcome (success or failure) of the events.                                                                                                                                           |
 | V-72847          | The audit information produced by PostgreSQL must be protected from unauthorized modification.                                                                                                                                                                                   |
