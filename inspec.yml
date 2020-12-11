@@ -1,18 +1,8 @@
-# encoding: utf-8
-#
-name: crunchydata-postgres-stig
-title: Crunchy PostgreSQL 9.5 Security Technical Implementation Guide InSpec profile
-maintainer: Yogesh Sharma <Yogesh.Sharma@CrunchyData.com>, Aaron Lippold <lippold@gmail.com>
-copyright: Crunchy Data
-copyright_email: info@crunchydata.com
-license: Apache 2.0
-summary: "The Security Technical Implementation Guide is published as a tool to
-          improve the security of Department of Defense (DoD) information
-          systems. The requirements are derived from the National Institute of
-          Standards and Technology (NIST) 800-53 and related documents. 
-          Release Date: 2017-01-20
-          Version: 1
-          Publisher: DISA
-          Source: STIG.DOD.MIL
-          uri: http://iase.disa.mil"
+name: PostgreSQL_9-x_STIG
+title: PostgreSQL 9.x based upon the PostgreSQL 9-X Security Technical Implementation Guide
+maintainer: DISA DevSecOps Team
+copyright: Defense Information Systems Agency (DISA)
+license: Apache-2.0
+summary: InSpec testing for baseline compliance with the PostgreSQL_9-x STIG
 version: 1.0.0
+inspec_version: ">= 4.0"
