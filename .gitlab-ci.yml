@@ -1,11 +1,7 @@
 include:
 - project: stig/inspec-scanning-integration
-  ref: consolidating-templates
-  file: templates/check-template.yml
-
-- project: stig/inspec-scanning-integration
-  ref: consolidating-templates
-  file: templates/lint-template.yml
+  ref: 1.0.0
+  file: templates/dependencies.yml
 
 before_script:
   - echo "SCV Pipeline for PostgreSQL 9.X"
