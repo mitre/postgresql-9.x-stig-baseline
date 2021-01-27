@@ -1,17 +1,29 @@
 include:
 - project: stig/inspec-scanning-integration
-  ref: 1.0.0
-  file: templates/dependencies.yml
+  ref: 1.1.0
+  file: templates/templates.yml
 
 before_script:
   - echo "SCV Pipeline for PostgreSQL 9.X"
 
 stages:
   - check
-  - lint   
- 
+  - lint
+  - exec
+  - publish
+
 check PostgreSQL_9.X:
   extends: .ci:stage:check:inspec
 
 lint PostgreSQL_9.X:
   extends: .ci:stage:lint:inspec
+
+exec PostgreSQL_9.X:
+  extends: .ci:stage:exec:inspec
+  variables:
+    TARGET: 'rep.dsolab.io/baselines/postgres9.6_baseline:1.0'
+
+publish PostgreSQL_9.X:
+  extends: .ci:stage:publish:inspec
+  dependencies:
+  - exec PostgreSQL_9.X
