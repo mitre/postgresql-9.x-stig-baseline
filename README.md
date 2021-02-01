@@ -19,6 +19,11 @@ While the PostgreSQL STIG automation profile check was developed to provide tech
 
 ### This STIG Automated Compliance Validation Profile was developed based upon:
 - PostgreSQL Security Technical Implementation Guide
+### Update History 
+| Guidance Name  | Guidance Version | Guidance Location                            | Profile Version | Profile Release Date | STIG EOL    | Profile EOL |
+|---------------------------------------|------------------|--------------------------------------------|-----------------|----------------------|-------------|-------------|
+| PostgreSQL 9.x STIG  | Ver 2, Rel 1    | https://public.cyber.mil/stigs/downloads/  |           |      | NA | NA |
+| CIS Benchmark for PostgreSQL 9.x | 1.0.0  | https://www.cisecurity.org/cis-benchmarks/ |   |    | NA | NA |
 
 
 ## Getting Started
