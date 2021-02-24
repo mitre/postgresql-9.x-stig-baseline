@@ -1,29 +1,26 @@
-# encoding: utf-8
 #
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
+# -----------------
+# Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
+# Status: Accepted
+#
+# This Security Technical Implementation Guide is published as a tool to improve
+# the security of Department of Defense (DoD) information systems. The
+# requirements are derived from the National Institute of Standards and
+# Technology (NIST) 800-53 and related documents. Comments or proposed revisions
+# to this document should be sent via email to the following address:
+# disa.stig_spt@mail.mil.
+#
+# Release Date: 2017-01-20
+# Version: 1
+# Publisher: DISA
+# Source: STIG.DOD.MIL
+# uri: http://iase.disa.mil
+# -----------------
 
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
-
-control "V-72989" do
+control 'V-72989' do
   title "PostgreSQL must implement NIST FIPS 140-2 validated cryptographic
   modules to generate and validate cryptographic hashes."
-  desc  "Use of weak or untested encryption algorithms undermines the purposes
+  desc "Use of weak or untested encryption algorithms undermines the purposes
   of utilizing encryption to protect data. The application must implement
   cryptographic modules adhering to the higher standards approved by the federal
   government since this provides assurance they have been tested and validated.
@@ -32,13 +29,13 @@ control "V-72989" do
   modules must be validated and certified by NIST as FIPS-compliant."
 
   impact 0.7
-  tag "severity": "high"
-  tag "gtitle": "SRG-APP-000514-DB-000381"
-  tag "gid": "V-72989"
-  tag "rid": "SV-87641r1_rule"
-  tag "stig_id": "PGS9-00-008000"
-  tag "cci": ["CCI-002450"]
-  tag "nist": ["SC-13", "Rev_4"]
+  tag "severity": 'high'
+  tag "gtitle": 'SRG-APP-000514-DB-000381'
+  tag "gid": 'V-72989'
+  tag "rid": 'SV-87641r1_rule'
+  tag "stig_id": 'PGS9-00-008000'
+  tag "cci": ['CCI-002450']
+  tag "nist": %w(SC-13 Rev_4)
 
   tag "check": "First, as the system administrator, run the following to see if FIPS
 is enabled:

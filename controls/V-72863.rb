@@ -1,53 +1,50 @@
-# encoding: utf-8
 #
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
-
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
+# -----------------
+# Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
+# Status: Accepted
+#
+# This Security Technical Implementation Guide is published as a tool to improve
+# the security of Department of Defense (DoD) information systems. The
+# requirements are derived from the National Institute of Standards and
+# Technology (NIST) 800-53 and related documents. Comments or proposed revisions
+# to this document should be sent via email to the following address:
+# disa.stig_spt@mail.mil.
+#
+# Release Date: 2017-01-20
+# Version: 1
+# Publisher: DISA
+# Source: STIG.DOD.MIL
+# uri: http://iase.disa.mil
+# -----------------
 PG_DBA = attribute(
   'pg_dba',
-  description: 'The postgres DBA user to access the test database',
+  description: 'The postgres DBA user to access the test database'
 )
 
 PG_DBA_PASSWORD = attribute(
   'pg_dba_password',
-  description: 'The password for the postgres DBA user',
+  description: 'The password for the postgres DBA user'
 )
 
 PG_DB = attribute(
   'pg_db',
-  description: 'The database used for tests',
+  description: 'The database used for tests'
 )
 
 PG_HOST = attribute(
   'pg_host',
-  description: 'The hostname or IP address used to connect to the database',
+  description: 'The hostname or IP address used to connect to the database'
 )
 
 PG_MAX_CONNECTIONS = attribute(
   'pg_max_connections',
-  description: 'The maximum number of connections a user can have open at one time',
+  description: 'The maximum number of connections a user can have open at one time'
 )
 
-control "V-72863" do
+control 'V-72863' do
   title "PostgreSQL must limit the number of concurrent sessions to an
   organization-defined number per user for all accounts and/or account types."
-  desc  "Database management includes the ability to control the number of users
+  desc "Database management includes the ability to control the number of users
   and user sessions utilizing PostgreSQL. Unlimited concurrent connections to
   PostgreSQL could allow a successful Denial of Service (DoS) attack by
   exhausting connection resources; and a system can also fail or be degraded by
@@ -72,13 +69,13 @@ control "V-72863" do
   (Sessions may also be referred to as connections or logons, which for the
   purposes of this requirement are synonyms.."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000001-DB-000031"
-  tag "gid": "V-72863"
-  tag "rid": "SV-87515r1_rule"
-  tag "stig_id": "PGS9-00-001200"
-  tag "cci": ["CCI-000054"]
-  tag "nist": ["AC-10", "Rev_4"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000001-DB-000031'
+  tag "gid": 'V-72863'
+  tag "rid": 'SV-87515r1_rule'
+  tag "stig_id": 'PGS9-00-001200'
+  tag "cci": ['CCI-000054']
+  tag "nist": %w(AC-10 Rev_4)
   tag "check": 'To check the total amount of connections allowed by the database,
                 as the database administrator, run the following SQL:
                 $ sudo su - postgres

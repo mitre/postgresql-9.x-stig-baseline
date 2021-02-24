@@ -1,46 +1,42 @@
-# encoding: utf-8
 #
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
-
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
+# -----------------
+# Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
+# Status: Accepted
+#
+# This Security Technical Implementation Guide is published as a tool to improve
+# the security of Department of Defense (DoD) information systems. The
+# requirements are derived from the National Institute of Standards and
+# Technology (NIST) 800-53 and related documents. Comments or proposed revisions
+# to this document should be sent via email to the following address:
+# disa.stig_spt@mail.mil.
+#
+# Release Date: 2017-01-20
+# Version: 1
+# Publisher: DISA
+# Source: STIG.DOD.MIL
+# uri: http://iase.disa.mil
+# -----------------
 PG_DBA = attribute(
   'pg_dba',
-  description: 'The postgres DBA user to access the test database',
+  description: 'The postgres DBA user to access the test database'
 )
 
 PG_DBA_PASSWORD = attribute(
   'pg_dba_password',
-  description: 'The password for the postgres DBA user',
+  description: 'The password for the postgres DBA user'
 )
 
 PG_DB = attribute(
   'pg_db',
-  description: 'The database used for tests',
+  description: 'The database used for tests'
 )
 
 PG_HOST = attribute(
   'pg_host',
-  description: 'The hostname or IP address used to connect to the database',
+  description: 'The hostname or IP address used to connect to the database'
 )
 
-control "V-72991" do
-
+control 'V-72991' do
   title "PostgreSQL must use NSA-approved cryptography to protect classified
 information in accordance with the data owners requirements."
   desc  "Use of weak or untested encryption algorithms undermines the purposes of
@@ -55,13 +51,13 @@ regulations, and standards.
 NSA-approved cryptography for classified networks is hardware based. This
 requirement addresses the compatibility of PostgreSQL with the encryption devices."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000416-DB-000380"
-  tag "gid": "V-72991"
-  tag "rid": "SV-87643r1_rule"
-  tag "stig_id": "PGS9-00-008100"
-  tag "cci": ["CCI-002450"]
-  tag "nist": ["SC-13", "Rev_4"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000416-DB-000380'
+  tag "gid": 'V-72991'
+  tag "rid": 'SV-87643r1_rule'
+  tag "stig_id": 'PGS9-00-008100'
+  tag "cci": ['CCI-002450']
+  tag "nist": %w(SC-13 Rev_4)
 
   tag "check": "If PostgreSQL is deployed in an unclassified environment, this is
 not applicable (NA).

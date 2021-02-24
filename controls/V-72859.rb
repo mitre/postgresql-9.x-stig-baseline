@@ -1,70 +1,67 @@
-# encoding: utf-8
 #
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
-
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
+# -----------------
+# Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
+# Status: Accepted
+#
+# This Security Technical Implementation Guide is published as a tool to improve
+# the security of Department of Defense (DoD) information systems. The
+# requirements are derived from the National Institute of Standards and
+# Technology (NIST) 800-53 and related documents. Comments or proposed revisions
+# to this document should be sent via email to the following address:
+# disa.stig_spt@mail.mil.
+#
+# Release Date: 2017-01-20
+# Version: 1
+# Publisher: DISA
+# Source: STIG.DOD.MIL
+# uri: http://iase.disa.mil
+# -----------------
 PG_OWNER = attribute(
   'pg_owner',
-  description: "The system user of the postgres process",
+  description: 'The system user of the postgres process'
 )
 
 PG_DBA = attribute(
   'pg_dba',
-  description: 'The postgres DBA user to access the test database',
+  description: 'The postgres DBA user to access the test database'
 )
 
 PG_DBA_PASSWORD = attribute(
   'pg_dba_password',
-  description: 'The password for the postgres DBA user',
+  description: 'The password for the postgres DBA user'
 )
 
 PG_DB = attribute(
   'pg_db',
-  description: 'The database used for tests',
+  description: 'The database used for tests'
 )
 
 PG_HOST = attribute(
   'pg_host',
-  description: 'The hostname or IP address used to connect to the database',
+  description: 'The hostname or IP address used to connect to the database'
 )
 
 PG_DATA_DIR = attribute(
   'pg_data_dir',
-  description: 'The postgres data directory',
+  description: 'The postgres data directory'
 )
 
 PG_SUPERUSERS = attribute(
   'pg_superusers',
-  description: 'Authorized superuser accounts',
+  description: 'Authorized superuser accounts'
 )
 
 PG_HBA_CONF_FILE = attribute(
   'pg_hba_conf_file',
-  description: 'The postgres hba configuration file',
+  description: 'The postgres hba configuration file'
 )
 
 PG_REPLICAS = attribute(
   'pg_replicas',
-  description: 'List of postgres replicas in CIDR notation',
+  description: 'List of postgres replicas in CIDR notation'
 )
 
-control "V-72859" do
+control 'V-72859' do
   title "PostgreSQL must enforce approved authorizations for logical access to
         information and system resources in accordance with applicable access
         control policies."
@@ -99,13 +96,13 @@ control "V-72859" do
         result in users either gaining or being denied access inappropriately and
         in conflict with applicable policy."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000033-DB-000084"
-  tag "gid": "V-72859"
-  tag "rid": "SV-87511r1_rule"
-  tag "stig_id": "PGS9-00-000900"
-  tag "cci": ["CCI-000213"]
-  tag "nist": ["AC-3", "Rev_4"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000033-DB-000084'
+  tag "gid": 'V-72859'
+  tag "rid": 'SV-87511r1_rule'
+  tag "stig_id": 'PGS9-00-000900'
+  tag "cci": ['CCI-000213']
+  tag "nist": %w(AC-3 Rev_4)
   tag "check": "From the system security plan or equivalent documentation,
   determine the appropriate permissions on database objects for each kind
   (group role) of user. If this documentation is missing, this is a finding.
@@ -250,13 +247,12 @@ https://www.postgresql.org/docs/current/static/sql-grant.html
   roles = roles_query.lines
 
   roles.each do |role|
-    unless PG_SUPERUSERS.include?(role)
-      superuser_sql = "SELECT r.rolsuper FROM pg_catalog.pg_roles r "\
-        "WHERE r.rolname = '#{role}';"
+    next if PG_SUPERUSERS.include?(role)
+    superuser_sql = 'SELECT r.rolsuper FROM pg_catalog.pg_roles r '\
+      "WHERE r.rolname = '#{role}';"
 
-      describe sql.query(superuser_sql, [PG_DB]) do
-        its('output') { should_not eq 't' }
-      end
+    describe sql.query(superuser_sql, [PG_DB]) do
+      its('output') { should_not eq 't' }
     end
   end
 
@@ -269,9 +265,9 @@ https://www.postgresql.org/docs/current/static/sql-grant.html
     "=[#{object_public_privileges}]+)\/\\w+,?)+|)\\|"
   object_acl_regex = Regexp.new(object_acl)
 
-  objects_sql = "SELECT n.nspname, c.relname, c.relkind "\
-    "FROM pg_catalog.pg_class c "\
-    "LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace "\
+  objects_sql = 'SELECT n.nspname, c.relname, c.relkind '\
+    'FROM pg_catalog.pg_class c '\
+    'LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace '\
     "WHERE c.relkind IN ('r', 'v', 'm', 'S', 'f') "\
     "AND n.nspname !~ '^pg_' AND pg_catalog.pg_table_is_visible(c.oid);"
 
@@ -281,28 +277,27 @@ https://www.postgresql.org/docs/current/static/sql-grant.html
 
   databases.each do |database|
     rows = sql.query(objects_sql, [database])
-    if rows.methods.include?(:output) # Handle connection disabled on database
-      objects = rows.lines
+    next unless rows.methods.include?(:output) # Handle connection disabled on database
+    objects = rows.lines
 
-      objects.each do |obj|
-        schema, object, type = obj.split('|')
-        relacl_sql = "SELECT pg_catalog.array_to_string(c.relacl, E','), "\
-          "n.nspname, c.relname, c.relkind FROM pg_catalog.pg_class c "\
-          "LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace "\
-          "WHERE n.nspname = '#{schema}' AND c.relname = '#{object}' "\
-          "AND c.relkind = '#{type}';"
+    objects.each do |obj|
+      schema, object, type = obj.split('|')
+      relacl_sql = "SELECT pg_catalog.array_to_string(c.relacl, E','), "\
+        'n.nspname, c.relname, c.relkind FROM pg_catalog.pg_class c '\
+        'LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace '\
+        "WHERE n.nspname = '#{schema}' AND c.relname = '#{object}' "\
+        "AND c.relkind = '#{type}';"
 
-        describe sql.query(relacl_sql, [database]) do
-          its('output') { should match object_acl_regex }
-        end
-        # TODO: Add test for column acl
+      describe sql.query(relacl_sql, [database]) do
+        its('output') { should match object_acl_regex }
       end
+      # TODO: Add test for column acl
     end
   end
 
   describe postgres_hba_conf(PG_HBA_CONF_FILE).where { type == 'local' } do
     its('user.uniq') { should cmp PG_OWNER }
-    its('auth_method.uniq') { should_not cmp 'trust'}
+    its('auth_method.uniq') { should_not cmp 'trust' }
   end
 
   describe.one do
@@ -320,6 +315,6 @@ https://www.postgresql.org/docs/current/static/sql-grant.html
     end
   end
   describe postgres_hba_conf(PG_HBA_CONF_FILE).where { type == 'host' } do
-    its('auth_method.uniq') { should cmp 'md5'}
+    its('auth_method.uniq') { should cmp 'md5' }
   end
 end

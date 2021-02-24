@@ -1,30 +1,27 @@
-# encoding: utf-8
 #
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
+# -----------------
+# Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
+# Status: Accepted
+#
+# This Security Technical Implementation Guide is published as a tool to improve
+# the security of Department of Defense (DoD) information systems. The
+# requirements are derived from the National Institute of Standards and
+# Technology (NIST) 800-53 and related documents. Comments or proposed revisions
+# to this document should be sent via email to the following address:
+# disa.stig_spt@mail.mil.
+#
+# Release Date: 2017-01-20
+# Version: 1
+# Publisher: DISA
+# Source: STIG.DOD.MIL
+# uri: http://iase.disa.mil
+# -----------------
 
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
-
-control "V-72903" do
+control 'V-72903' do
   title "PostgreSQL must include additional, more detailed, organization-defined
   information in the audit records for audit events identified by type,
   location, or subject."
-  desc  "Information system auditing capability is critical for accurate
+  desc "Information system auditing capability is critical for accurate
   forensic analysis. Reconstruction of harmful events or forensic analysis is
   not possible if audit records do not contain enough information. To support
   analysis, some types of events will need information to be logged that
@@ -44,13 +41,13 @@ control "V-72903" do
   records are full-text recording of privileged commands or the individual
   identities of shared account users."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000101-DB-000044"
-  tag "gid": "V-72903"
-  tag "rid": "SV-87555r1_rule"
-  tag "stig_id": "PGS9-00-003500"
-  tag "cci": ["CCI-000135"]
-  tag "nist": ["AU-3 (1)", "Rev_4"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000101-DB-000044'
+  tag "gid": 'V-72903'
+  tag "rid": 'SV-87555r1_rule'
+  tag "stig_id": 'PGS9-00-003500'
+  tag "cci": ['CCI-000135']
+  tag "nist": ['AU-3 (1)', 'Rev_4']
   tag "check": "Review the system documentation to identify what additional
   information the organization has determined necessary.
   Check PostgreSQL settings and existing audit records to verify that all
@@ -67,5 +64,4 @@ control "V-72903" do
   instructions on enabling logging."
 
   only_if { false }
-
 end

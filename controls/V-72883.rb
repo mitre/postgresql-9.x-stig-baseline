@@ -1,58 +1,55 @@
-# encoding: utf-8
 #
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
-
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
+# -----------------
+# Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
+# Status: Accepted
+#
+# This Security Technical Implementation Guide is published as a tool to improve
+# the security of Department of Defense (DoD) information systems. The
+# requirements are derived from the National Institute of Standards and
+# Technology (NIST) 800-53 and related documents. Comments or proposed revisions
+# to this document should be sent via email to the following address:
+# disa.stig_spt@mail.mil.
+#
+# Release Date: 2017-01-20
+# Version: 1
+# Publisher: DISA
+# Source: STIG.DOD.MIL
+# uri: http://iase.disa.mil
+# -----------------
 PG_OWNER = attribute(
   'pg_owner',
-  description: "The system user of the postgres process",
+  description: 'The system user of the postgres process'
 )
 
 PG_DBA = attribute(
   'pg_dba',
-  description: 'The postgres DBA user to access the test database',
+  description: 'The postgres DBA user to access the test database'
 )
 
 PG_DBA_PASSWORD = attribute(
   'pg_dba_password',
-  description: 'The password for the postgres DBA user',
+  description: 'The password for the postgres DBA user'
 )
 
 PG_DB = attribute(
   'pg_db',
-  description: 'The database used for tests',
+  description: 'The database used for tests'
 )
 
 PG_HOST = attribute(
   'pg_host',
-  description: 'The hostname or IP address used to connect to the database',
+  description: 'The hostname or IP address used to connect to the database'
 )
 
 PG_SUPERUSERS = attribute(
   'pg_superusers',
-  description: 'Authorized superuser accounts',
+  description: 'Authorized superuser accounts'
 )
 
-control "V-72883" do
+control 'V-72883' do
   title "PostgreSQL must enforce discretionary access control policies, as
   defined by the data owner, over defined subjects and objects."
-  desc  "Discretionary Access Control (DAC) is based on the notion that
+  desc "Discretionary Access Control (DAC) is based on the notion that
   individual users are \"owners\" of objects and therefore have discretion over
   who should be authorized to access the object and in which mode (e.g., read or
   write). Ownership is usually acquired as a consequence of creating the object
@@ -78,13 +75,13 @@ control "V-72883" do
   dentity-based access control, that limitation is not required for this use of
   discretionary access control."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000328-DB-000301"
-  tag "gid": "V-72883"
-  tag "rid": "SV-87535r1_rule"
-  tag "stig_id": "PGS9-00-002200"
-  tag "cci": ["CCI-002165"]
-  tag "nist": ["AC-3 (4)", "Rev_4"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000328-DB-000301'
+  tag "gid": 'V-72883'
+  tag "rid": 'SV-87535r1_rule'
+  tag "stig_id": 'PGS9-00-002200'
+  tag "cci": ['CCI-002165']
+  tag "nist": ['AC-3 (4)', 'Rev_4']
   tag "check": "Review system documentation to identify the required
   discretionary access control (DAC).
 
@@ -137,34 +134,34 @@ control "V-72883" do
     functions_sql = ''
 
     if database == 'postgres'
-      schemas_sql = "SELECT n.nspname, pg_catalog.pg_get_userbyid(n.nspowner) "\
-        "FROM pg_catalog.pg_namespace n "\
+      schemas_sql = 'SELECT n.nspname, pg_catalog.pg_get_userbyid(n.nspowner) '\
+        'FROM pg_catalog.pg_namespace n '\
         "WHERE pg_catalog.pg_get_userbyid(n.nspowner) <> '#{PG_OWNER}';"
-      functions_sql = "SELECT n.nspname, p.proname, "\
-        "pg_catalog.pg_get_userbyid(n.nspowner) "\
-        "FROM pg_catalog.pg_proc p "\
-        "LEFT JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace "\
+      functions_sql = 'SELECT n.nspname, p.proname, '\
+        'pg_catalog.pg_get_userbyid(n.nspowner) '\
+        'FROM pg_catalog.pg_proc p '\
+        'LEFT JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace '\
         "WHERE pg_catalog.pg_get_userbyid(n.nspowner) <> '#{PG_OWNER}';"
     else
-      schemas_sql = "SELECT n.nspname, pg_catalog.pg_get_userbyid(n.nspowner) "\
-        "FROM pg_catalog.pg_namespace n "\
-        "WHERE pg_catalog.pg_get_userbyid(n.nspowner) "\
+      schemas_sql = 'SELECT n.nspname, pg_catalog.pg_get_userbyid(n.nspowner) '\
+        'FROM pg_catalog.pg_namespace n '\
+        'WHERE pg_catalog.pg_get_userbyid(n.nspowner) '\
         "NOT IN (#{authorized_owners.map { |e| "'#{e}'" }.join(',')}) "\
         "AND n.nspname !~ '^pg_' AND n.nspname <> 'information_schema';"
-      functions_sql = "SELECT n.nspname, p.proname, "\
-        "pg_catalog.pg_get_userbyid(n.nspowner) "\
-        "FROM pg_catalog.pg_proc p "\
-        "LEFT JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace "\
-        "WHERE pg_catalog.pg_get_userbyid(n.nspowner) "\
+      functions_sql = 'SELECT n.nspname, p.proname, '\
+        'pg_catalog.pg_get_userbyid(n.nspowner) '\
+        'FROM pg_catalog.pg_proc p '\
+        'LEFT JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace '\
+        'WHERE pg_catalog.pg_get_userbyid(n.nspowner) '\
         "NOT IN (#{authorized_owners.map { |e| "'#{e}'" }.join(',')}) "\
         "AND n.nspname <> 'pg_catalog' AND n.nspname <> 'information_schema';"
     end
 
     connection_error = "FATAL:\\s+database \"#{database}\" is not currently "\
-      "accepting connections"
+      'accepting connections'
     connection_error_regex = Regexp.new(connection_error)
-    
-    sql_result=sql.query(schemas_sql, [database])
+
+    sql_result = sql.query(schemas_sql, [database])
 
     describe.one do
       describe sql_result do
@@ -176,7 +173,7 @@ control "V-72883" do
       end
     end
 
-    sql_result=sql.query(functions_sql, [database])
+    sql_result = sql.query(functions_sql, [database])
 
     describe.one do
       describe sql_result do
@@ -192,24 +189,24 @@ control "V-72883" do
       objects_sql = ''
 
       if database == 'postgres'
-        objects_sql = "SELECT n.nspname, c.relname, c.relkind, "\
-          "pg_catalog.pg_get_userbyid(n.nspowner) FROM pg_catalog.pg_class c "\
-          "LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace "\
+        objects_sql = 'SELECT n.nspname, c.relname, c.relkind, '\
+          'pg_catalog.pg_get_userbyid(n.nspowner) FROM pg_catalog.pg_class c '\
+          'LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace '\
           "WHERE c.relkind IN ('#{type}','s','') "\
           "AND pg_catalog.pg_get_userbyid(n.nspowner) <> '#{PG_OWNER}' "
-          "AND n.nspname !~ '^pg_toast';"
+        "AND n.nspname !~ '^pg_toast';"
       else
-        objects_sql = "SELECT n.nspname, c.relname, c.relkind, "\
-          "pg_catalog.pg_get_userbyid(n.nspowner) FROM pg_catalog.pg_class c "\
-          "LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace "\
+        objects_sql = 'SELECT n.nspname, c.relname, c.relkind, '\
+          'pg_catalog.pg_get_userbyid(n.nspowner) FROM pg_catalog.pg_class c '\
+          'LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace '\
           "WHERE c.relkind IN ('#{type}','s','') "\
-          "AND pg_catalog.pg_get_userbyid(n.nspowner) "\
+          'AND pg_catalog.pg_get_userbyid(n.nspowner) '\
           "NOT IN (#{authorized_owners.map { |e| "'#{e}'" }.join(',')}) "\
           "AND n.nspname <> 'pg_catalog' AND n.nspname <> 'information_schema'"\
           " AND n.nspname !~ '^pg_toast';"
       end
 
-      sql_result=sql.query(objects_sql, [database])
+      sql_result = sql.query(objects_sql, [database])
 
       describe.one do
         describe sql_result do

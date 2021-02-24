@@ -1,30 +1,27 @@
-# encoding: utf-8
 #
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
+# -----------------
+# Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
+# Status: Accepted
+#
+# This Security Technical Implementation Guide is published as a tool to improve
+# the security of Department of Defense (DoD) information systems. The
+# requirements are derived from the National Institute of Standards and
+# Technology (NIST) 800-53 and related documents. Comments or proposed revisions
+# to this document should be sent via email to the following address:
+# disa.stig_spt@mail.mil.
+#
+# Release Date: 2017-01-20
+# Version: 1
+# Publisher: DISA
+# Source: STIG.DOD.MIL
+# uri: http://iase.disa.mil
+# -----------------
 
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
-
-  control "V-72845" do
+control 'V-72845' do
   title "Security-relevant software updates to PostgreSQL must be installed
   within the time period directed by an authoritative source (e.g., IAVM, CTOs,
   DTMs, and STIGs)."
-  desc  "Security flaws with software applications, including database
+  desc "Security flaws with software applications, including database
   management systems, are discovered daily. Vendors are constantly updating and
   patching their products to address newly discovered security vulnerabilities.
   Organizations (including any contractor to the organization) are required to
@@ -50,13 +47,13 @@ uri: http://iase.disa.mil
   specific time period will be defined by an authoritative source (e.g., IAVM,
   CTOs, DTMs, and STIGs)."
   impact 0.7
-  tag "severity": "high"
-  tag "gtitle": "SRG-APP-000456-DB-000390"
-  tag "gid": "V-72845"
-  tag "rid": "SV-87497r1_rule"
-  tag "stig_id": "PGS9-00-000300"
-  tag "cci": ["CCI-002605"]
-  tag "nist": ["SI-2 c", "Rev_4"]
+  tag "severity": 'high'
+  tag "gtitle": 'SRG-APP-000456-DB-000390'
+  tag "gid": 'V-72845'
+  tag "rid": 'SV-87497r1_rule'
+  tag "stig_id": 'PGS9-00-000300'
+  tag "cci": ['CCI-002605']
+  tag "nist": ['SI-2 c', 'Rev_4']
 
   tag "check": "If new packages are available for PostgreSQL, they can be
   reviewed in the package manager appropriate for the server operating system:
@@ -79,5 +76,4 @@ uri: http://iase.disa.mil
   patches are consistently applied to PostgreSQL within the time allowed."
 
   only_if { false }
-
 end

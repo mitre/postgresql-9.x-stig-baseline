@@ -1,26 +1,23 @@
-# encoding: utf-8
 #
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
+# -----------------
+# Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
+# Status: Accepted
+#
+# This Security Technical Implementation Guide is published as a tool to improve
+# the security of Department of Defense (DoD) information systems. The
+# requirements are derived from the National Institute of Standards and
+# Technology (NIST) 800-53 and related documents. Comments or proposed revisions
+# to this document should be sent via email to the following address:
+# disa.stig_spt@mail.mil.
+#
+# Release Date: 2017-01-20
+# Version: 1
+# Publisher: DISA
+# Source: STIG.DOD.MIL
+# uri: http://iase.disa.mil
+# -----------------
 
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
-
-control "V-73027" do
+control 'V-73027' do
   title "PostgreSQL must require users to reauthenticate when organization-defined
 circumstances or situations require reauthentication."
   desc  "The DoD standard for authentication of an interactive user is the
@@ -49,13 +46,13 @@ situations, including (but not limited to) the following circumstances:
 Within the DoD, the minimum circumstances requiring reauthentication are privilege
 escalation and role changes."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000389-DB-000372"
-  tag "gid": "V-73027"
-  tag "rid": "SV-87679r1_rule"
-  tag "stig_id": "PGS9-00-010100"
-  tag "cci": ["CCI-002038"]
-  tag "nist": ["IA-11", "Rev_4"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000389-DB-000372'
+  tag "gid": 'V-73027'
+  tag "rid": 'SV-87679r1_rule'
+  tag "stig_id": 'PGS9-00-010100'
+  tag "cci": ['CCI-002038']
+  tag "nist": %w(IA-11 Rev_4)
   tag "check": "Determine all situations where a user must re-authenticate. Check if
 the mechanisms that handle such situations use the following SQL:
 
@@ -81,5 +78,4 @@ To make all users re-authenticate, the following must be present:
 SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE user LIKE '%'"
 
   only_if { false }
-
 end

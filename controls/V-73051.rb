@@ -1,26 +1,23 @@
-# encoding: utf-8
 #
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
+# -----------------
+# Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
+# Status: Accepted
+#
+# This Security Technical Implementation Guide is published as a tool to improve
+# the security of Department of Defense (DoD) information systems. The
+# requirements are derived from the National Institute of Standards and
+# Technology (NIST) 800-53 and related documents. Comments or proposed revisions
+# to this document should be sent via email to the following address:
+# disa.stig_spt@mail.mil.
+#
+# Release Date: 2017-01-20
+# Version: 1
+# Publisher: DISA
+# Source: STIG.DOD.MIL
+# uri: http://iase.disa.mil
+# -----------------
 
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
-
-control "V-73051" do
+control 'V-73051' do
   title "PostgreSQL must automatically terminate a user session after
 organization-defined conditions or trigger events requiring session disconnect."
   desc  "This addresses the termination of user-initiated logical sessions in
@@ -42,13 +39,13 @@ certain types of incidents, and time-of-day restrictions on information system u
 This capability is typically reserved for specific cases where the system owner,
 data owner, or organization requires additional assurance."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000295-DB-000305"
-  tag "gid": "V-73051"
-  tag "rid": "SV-87703r1_rule"
-  tag "stig_id": "PGS9-00-011600"
-  tag "cci": ["CCI-002361"]
-  tag "nist": ["AC-12", "Rev_4"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000295-DB-000305'
+  tag "gid": 'V-73051'
+  tag "rid": 'SV-87703r1_rule'
+  tag "stig_id": 'PGS9-00-011600'
+  tag "cci": ['CCI-002361']
+  tag "nist": %w(AC-12 Rev_4)
   tag "check": "Review system documentation to obtain the organization's definition
 of circumstances requiring automatic session termination. If the documentation
 explicitly states that such termination is not required or is prohibited, this is
@@ -82,5 +79,4 @@ This script would be added to a cron job:
 0 17 * * * postgres /var/lib/pgsql/no_login.sh -d postgres -r"
 
   only_if { false }
-
 end

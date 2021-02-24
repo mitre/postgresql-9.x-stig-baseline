@@ -1,90 +1,87 @@
-# encoding: utf-8
 #
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
-
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
+# -----------------
+# Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
+# Status: Accepted
+#
+# This Security Technical Implementation Guide is published as a tool to improve
+# the security of Department of Defense (DoD) information systems. The
+# requirements are derived from the National Institute of Standards and
+# Technology (NIST) 800-53 and related documents. Comments or proposed revisions
+# to this document should be sent via email to the following address:
+# disa.stig_spt@mail.mil.
+#
+# Release Date: 2017-01-20
+# Version: 1
+# Publisher: DISA
+# Source: STIG.DOD.MIL
+# uri: http://iase.disa.mil
+# -----------------
 PG_OWNER = attribute(
   'pg_owner',
-  description: "The system user of the postgres process",
+  description: 'The system user of the postgres process'
 )
 
 PG_GROUP = attribute(
   'pg_group',
-  description: "The system group of the postgres process",
+  description: 'The system group of the postgres process'
 )
 
 PG_DBA = attribute(
   'pg_dba',
-  description: 'The postgres DBA user to access the test database',
+  description: 'The postgres DBA user to access the test database'
 )
 
 PG_DBA_PASSWORD = attribute(
   'pg_dba_password',
-  description: 'The password for the postgres DBA user',
+  description: 'The password for the postgres DBA user'
 )
 
 PG_DB = attribute(
   'pg_db',
-  description: 'The database used for tests',
+  description: 'The database used for tests'
 )
 
 PG_HOST = attribute(
   'pg_host',
-  description: 'The hostname or IP address used to connect to the database',
+  description: 'The hostname or IP address used to connect to the database'
 )
 
 PG_PORT = attribute(
   'pg_port',
-  description: 'The port used to connect to the database',
+  description: 'The port used to connect to the database'
 )
 
 PG_DATA_DIR = attribute(
   'pg_data_dir',
-  description: 'The postgres data directory',
+  description: 'The postgres data directory'
 )
 
 PG_CONF_FILE = attribute(
   'pg_conf_file',
-  description: 'The postgres configuration file',
+  description: 'The postgres configuration file'
 )
 
 PG_USER_DEFINED_CONF = attribute(
   'pg_user_defined_conf',
-  description: 'An additional postgres configuration file used to override default values',
+  description: 'An additional postgres configuration file used to override default values'
 )
 
 PG_SUPERUSERS = attribute(
   'pg_superusers',
-  description: 'Authorized superuser accounts',
+  description: 'Authorized superuser accounts'
 )
 
 PG_VERSION = attribute(
   'pg_version',
-  description: "The version of postgres",
+  description: 'The version of postgres'
 )
 
 PG_SHARED_DIRS = attribute(
   'pg_shared_dirs',
-  description: 'defines the locations of the postgresql shared library directories',
+  description: 'defines the locations of the postgresql shared library directories'
 )
 
-control "V-73063" do
+control 'V-73063' do
   title "PostgreSQL must use NIST FIPS 140-2 validated cryptographic modules for
         cryptographic operations."
   desc  "Use of weak or not validated cryptographic algorithms undermines the
@@ -107,14 +104,14 @@ control "V-73063" do
         NSA Type-X (where X=1, 2, 3, 4) products are NSA-certified, hardware-based
         encryption modules."
   impact 0.7
-  tag "severity": "high"
+  tag "severity": 'high'
 
-  tag "gtitle": "SRG-APP-000179-DB-000114"
-  tag "gid": "V-73063"
-  tag "rid": "SV-87715r1_rule"
-  tag "stig_id": "PGS9-00-012300"
-  tag "cci": ["CCI-000803"]
-  tag "nist": ["IA-7", "Rev_4"]
+  tag "gtitle": 'SRG-APP-000179-DB-000114'
+  tag "gid": 'V-73063'
+  tag "rid": 'SV-87715r1_rule'
+  tag "stig_id": 'PGS9-00-012300'
+  tag "cci": ['CCI-000803']
+  tag "nist": %w(IA-7 Rev_4)
 
   tag "check": "As the system administrator, run the following:
 

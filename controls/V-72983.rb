@@ -1,29 +1,26 @@
-# encoding: utf-8
 #
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
+# -----------------
+# Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
+# Status: Accepted
+#
+# This Security Technical Implementation Guide is published as a tool to improve
+# the security of Department of Defense (DoD) information systems. The
+# requirements are derived from the National Institute of Standards and
+# Technology (NIST) 800-53 and related documents. Comments or proposed revisions
+# to this document should be sent via email to the following address:
+# disa.stig_spt@mail.mil.
+#
+# Release Date: 2017-01-20
+# Version: 1
+# Publisher: DISA
+# Source: STIG.DOD.MIL
+# uri: http://iase.disa.mil
+# -----------------
 
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
-
-control "V-72983" do
+control 'V-72983' do
   title "PostgreSQL must provide audit record generation capability for
   DoD-defined auditable events within all DBMS/database components."
-  desc  "Without the capability to generate audit records, it would be difficult
+  desc "Without the capability to generate audit records, it would be difficult
   to establish, correlate, and investigate the events relating to an incident or
   identify those responsible for one.
   Audit records can be generated from various components within PostgreSQL
@@ -45,13 +42,13 @@ control "V-72983" do
   Organizations may define additional events requiring continuous or ad hoc
   auditing."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000089-DB-000064"
-  tag "gid": "V-72983"
-  tag "rid": "SV-87635r1_rule"
-  tag "stig_id": "PGS9-00-007400"
-  tag "cci": ["CCI-000169"]
-  tag "nist": ["AU-12 a", "Rev_4"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000089-DB-000064'
+  tag "gid": 'V-72983'
+  tag "rid": 'SV-87635r1_rule'
+  tag "stig_id": 'PGS9-00-007400'
+  tag "cci": ['CCI-000169']
+  tag "nist": ['AU-12 a', 'Rev_4']
   tag "check": "Check PostgreSQL auditing to determine whether
   organization-defined auditable events are being audited by the system.
   If organization-defined auditable events are not being audited, this is a
@@ -64,5 +61,4 @@ control "V-72983" do
   instructions on enabling logging."
 
   only_if { false }
-
 end
