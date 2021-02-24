@@ -1,26 +1,23 @@
-# encoding: utf-8
 #
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
+# -----------------
+# Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
+# Status: Accepted
+#
+# This Security Technical Implementation Guide is published as a tool to improve
+# the security of Department of Defense (DoD) information systems. The
+# requirements are derived from the National Institute of Standards and
+# Technology (NIST) 800-53 and related documents. Comments or proposed revisions
+# to this document should be sent via email to the following address:
+# disa.stig_spt@mail.mil.
+#
+# Release Date: 2017-01-20
+# Version: 1
+# Publisher: DISA
+# Source: STIG.DOD.MIL
+# uri: http://iase.disa.mil
+# -----------------
 
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
-
-control "V-73023" do
+control 'V-73023' do
   title "The system must provide a warning to appropriate support staff when
 allocated audit record storage volume reaches 75% of maximum audit record storage
 capacity."
@@ -36,13 +33,13 @@ reaching 75%, they are unable to plan for storage capacity expansion.
 
 The appropriate support staff include, at a minimum, the ISSO and the DBA/SA."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000359-DB-000319"
-  tag "gid": "V-73023"
-  tag "rid": "SV-87675r1_rule"
-  tag "stig_id": "PGS9-00-009900"
-  tag "cci": ["CCI-001855"]
-  tag "nist": ["AU-5 (1)", "Rev_4"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000359-DB-000319'
+  tag "gid": 'V-73023'
+  tag "rid": 'SV-87675r1_rule'
+  tag "stig_id": 'PGS9-00-009900'
+  tag "cci": ['CCI-001855']
+  tag "nist": ['AU-5 (1)', 'Rev_4']
   tag "check": "Review system configuration.
 
 If no script/tool is monitoring the partition for the PostgreSQL log directories,
@@ -73,5 +70,4 @@ fi
 Schedule this script in cron to run around the clock."
 
   only_if { false }
-  
 end

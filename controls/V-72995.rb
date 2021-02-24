@@ -1,46 +1,42 @@
-# encoding: utf-8
 #
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
-
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
+# -----------------
+# Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
+# Status: Accepted
+#
+# This Security Technical Implementation Guide is published as a tool to improve
+# the security of Department of Defense (DoD) information systems. The
+# requirements are derived from the National Institute of Standards and
+# Technology (NIST) 800-53 and related documents. Comments or proposed revisions
+# to this document should be sent via email to the following address:
+# disa.stig_spt@mail.mil.
+#
+# Release Date: 2017-01-20
+# Version: 1
+# Publisher: DISA
+# Source: STIG.DOD.MIL
+# uri: http://iase.disa.mil
+# -----------------
 PG_DBA = attribute(
   'pg_dba',
-  description: 'The postgres DBA user to access the database',
+  description: 'The postgres DBA user to access the database'
 )
 
 PG_DBA_PASSWORD = attribute(
   'pg_dba_password',
-  description: "password for the postgres dba password",
+  description: 'password for the postgres dba password'
 )
 
 PG_DB = attribute(
   'pg_db',
-  description: 'the default postgres database',
+  description: 'the default postgres database'
 )
 
 PG_HOST = attribute(
   'pg_host',
-  description: "Hostname or ip allow to connect to the database",
+  description: 'Hostname or ip allow to connect to the database'
 )
 
-control "V-72995" do
-
+control 'V-72995' do
   title "PostgreSQL must protect the confidentiality and integrity of all
 information at rest."
   desc  "This control is intended to address the confidentiality and integrity of
@@ -58,13 +54,13 @@ If the confidentiality and integrity of application data is not protected, the d
 will be open to compromise and unauthorized modification."
 
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000231-DB-000154"
-  tag "gid": "V-72995"
-  tag "rid": "SV-87647r1_rule"
-  tag "stig_id": "PGS9-00-008300"
-  tag "cci": ["CCI-001199"]
-  tag "nist": ["SC-28", "Rev_4"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000231-DB-000154'
+  tag "gid": 'V-72995'
+  tag "rid": 'SV-87647r1_rule'
+  tag "stig_id": 'PGS9-00-008300'
+  tag "cci": ['CCI-001199']
+  tag "nist": %w(SC-28 Rev_4)
 
   tag "check": "One possible way to encrypt data within PostgreSQL is to use the
 pgcrypto extension.

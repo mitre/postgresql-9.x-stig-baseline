@@ -1,48 +1,45 @@
-# encoding: utf-8
 #
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
-
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
+# -----------------
+# Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
+# Status: Accepted
+#
+# This Security Technical Implementation Guide is published as a tool to improve
+# the security of Department of Defense (DoD) information systems. The
+# requirements are derived from the National Institute of Standards and
+# Technology (NIST) 800-53 and related documents. Comments or proposed revisions
+# to this document should be sent via email to the following address:
+# disa.stig_spt@mail.mil.
+#
+# Release Date: 2017-01-20
+# Version: 1
+# Publisher: DISA
+# Source: STIG.DOD.MIL
+# uri: http://iase.disa.mil
+# -----------------
 PG_DBA = attribute(
   'pg_dba',
-  description: 'The postgres DBA user to access the test database',
+  description: 'The postgres DBA user to access the test database'
 )
 
 PG_DBA_PASSWORD = attribute(
   'pg_dba_password',
-  description: 'The password for the postgres DBA user',
+  description: 'The password for the postgres DBA user'
 )
 
 PG_DB = attribute(
   'pg_db',
-  description: 'The database used for tests',
+  description: 'The database used for tests'
 )
 
 PG_HOST = attribute(
   'pg_host',
-  description: 'The hostname or IP address used to connect to the database',
+  description: 'The hostname or IP address used to connect to the database'
 )
 
-control "V-72895" do
+control 'V-72895' do
   title "PostgreSQL must maintain the confidentiality and integrity of
   information during reception."
-  desc  "Information can be either unintentionally or maliciously disclosed or
+  desc "Information can be either unintentionally or maliciously disclosed or
   modified during reception, including, for example, during aggregation, at
   protocol transformation points, and during packing/unpacking. These
   unauthorized disclosures or modifications compromise the confidentiality or
@@ -58,13 +55,13 @@ control "V-72895" do
   is misleading, this function enables only TLS encryption methods, not SSL.
   See OpenSSL: https://mta.openssl.org/pipermail/openssl-dev/2015-May/001449.htm."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000442-DB-000379"
-  tag "gid": "V-72895"
-  tag "rid": "SV-87547r1_rule"
-  tag "stig_id": "PGS9-00-003000"
-  tag "cci": ["CCI-002422"]
-  tag "nist": ["SC-8 (2)", "Rev_4"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000442-DB-000379'
+  tag "gid": 'V-72895'
+  tag "rid": 'SV-87547r1_rule'
+  tag "stig_id": 'PGS9-00-003000'
+  tag "cci": ['CCI-002422']
+  tag "nist": ['SC-8 (2)', 'Rev_4']
   tag "check": "If the data owner does not have a strict requirement for
   ensuring data integrity and confidentiality is maintained at every step of the
   data transfer and handling process, this is not a finding.

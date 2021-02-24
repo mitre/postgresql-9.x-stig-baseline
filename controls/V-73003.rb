@@ -1,45 +1,42 @@
-# encoding: utf-8
 #
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
-
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
+# -----------------
+# Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
+# Status: Accepted
+#
+# This Security Technical Implementation Guide is published as a tool to improve
+# the security of Department of Defense (DoD) information systems. The
+# requirements are derived from the National Institute of Standards and
+# Technology (NIST) 800-53 and related documents. Comments or proposed revisions
+# to this document should be sent via email to the following address:
+# disa.stig_spt@mail.mil.
+#
+# Release Date: 2017-01-20
+# Version: 1
+# Publisher: DISA
+# Source: STIG.DOD.MIL
+# uri: http://iase.disa.mil
+# -----------------
 PG_DBA = attribute(
   'pg_dba',
-  description: 'The postgres DBA user to access the test database',
+  description: 'The postgres DBA user to access the test database'
 )
 
 PG_DBA_PASSWORD = attribute(
   'pg_dba_password',
-  description: 'The password for the postgres DBA user',
+  description: 'The password for the postgres DBA user'
 )
 
 PG_DB = attribute(
   'pg_db',
-  description: 'The database used for tests',
+  description: 'The database used for tests'
 )
 
 PG_HOST = attribute(
   'pg_host',
-  description: 'The hostname or IP address used to connect to the database',
+  description: 'The hostname or IP address used to connect to the database'
 )
 
-control "V-73003" do
+control 'V-73003' do
   title "PostgreSQL must implement cryptographic mechanisms to prevent unauthorized
 modification of organization-defined information at rest (to include, at a minimum,
 PII and classified information) on organization-defined information system
@@ -61,13 +58,13 @@ The decision whether and what to encrypt rests with the data owner and is also
 influenced by the physical measures taken to secure the equipment and media on which
 the information resides."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000428-DB-000386"
-  tag "gid": "V-73003"
-  tag "rid": "SV-87655r1_rule"
-  tag "stig_id": "PGS9-00-008700"
-  tag "cci": ["CCI-002475"]
-  tag "nist": ["SC-28 (1)", "Rev_4"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000428-DB-000386'
+  tag "gid": 'V-73003'
+  tag "rid": 'SV-87655r1_rule'
+  tag "stig_id": 'PGS9-00-008700'
+  tag "cci": ['CCI-002475']
+  tag "nist": ['SC-28 (1)', 'Rev_4']
 
   tag "check": "Review the system documentation to determine whether the
 organization has defined the information at rest that is to be protected from
@@ -115,5 +112,4 @@ gen_salt('md5')));"
   describe sql.query(pgcrypto_sql, [PG_DB]) do
     its('output') { should_not eq '' }
   end
-
 end

@@ -1,45 +1,42 @@
-# encoding: utf-8
 #
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
-
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
+# -----------------
+# Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
+# Status: Accepted
+#
+# This Security Technical Implementation Guide is published as a tool to improve
+# the security of Department of Defense (DoD) information systems. The
+# requirements are derived from the National Institute of Standards and
+# Technology (NIST) 800-53 and related documents. Comments or proposed revisions
+# to this document should be sent via email to the following address:
+# disa.stig_spt@mail.mil.
+#
+# Release Date: 2017-01-20
+# Version: 1
+# Publisher: DISA
+# Source: STIG.DOD.MIL
+# uri: http://iase.disa.mil
+# -----------------
 PG_DBA = attribute(
   'pg_dba',
-  description: 'The postgres DBA user to access the test database',
+  description: 'The postgres DBA user to access the test database'
 )
 
 PG_DBA_PASSWORD = attribute(
   'pg_dba_password',
-  description: 'The password for the postgres DBA user',
+  description: 'The password for the postgres DBA user'
 )
 
 PG_DB = attribute(
   'pg_db',
-  description: 'The database used for tests',
+  description: 'The database used for tests'
 )
 
 PG_HOST = attribute(
   'pg_host',
-  description: 'The hostname or IP address used to connect to the database',
+  description: 'The hostname or IP address used to connect to the database'
 )
 
-control "V-73015" do
+control 'V-73015' do
   title "If passwords are used for authentication, PostgreSQL must store only
 hashed, salted representations of passwords."
   desc  "The DoD standard for authentication is DoD-approved PKI certificates.
@@ -52,13 +49,13 @@ or using unsalted hashes would be vulnerable to unauthorized disclosure. Databas
 passwords must always be in the form of one-way, salted hashes when stored
 internally or externally to PostgreSQL."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000171-DB-000074"
-  tag "gid": "V-73015"
-  tag "rid": "SV-87667r1_rule"
-  tag "stig_id": "PGS9-00-009500"
-  tag "cci": ["CCI-000196"]
-  tag "nist": ["IA-5 (1) (c)", "Rev_4"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000171-DB-000074'
+  tag "gid": 'V-73015'
+  tag "rid": 'SV-87667r1_rule'
+  tag "stig_id": 'PGS9-00-009500'
+  tag "cci": ['CCI-000196']
+  tag "nist": ['IA-5 (1) (c)', 'Rev_4']
   tag "check": "To check if password encryption is enabled, as the database
 administrator (shown here as \"postgres\"), run the following SQL:
 
@@ -101,11 +98,10 @@ $ sudo service postgresql-9.5 restart"
     its('output') { should match /on|true/i }
   end
 
-  passwords_sql = "SELECT usename FROM pg_shadow "\
+  passwords_sql = 'SELECT usename FROM pg_shadow '\
     "WHERE passwd !~ '^md5[0-9a-f]+$';"
 
   describe sql.query(passwords_sql, [PG_DB]) do
     its('output') { should eq '' }
   end
-  
 end

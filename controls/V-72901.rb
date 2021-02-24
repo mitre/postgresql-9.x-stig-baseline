@@ -1,39 +1,36 @@
-# encoding: utf-8
 #
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
-
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
+# -----------------
+# Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
+# Status: Accepted
+#
+# This Security Technical Implementation Guide is published as a tool to improve
+# the security of Department of Defense (DoD) information systems. The
+# requirements are derived from the National Institute of Standards and
+# Technology (NIST) 800-53 and related documents. Comments or proposed revisions
+# to this document should be sent via email to the following address:
+# disa.stig_spt@mail.mil.
+#
+# Release Date: 2017-01-20
+# Version: 1
+# Publisher: DISA
+# Source: STIG.DOD.MIL
+# uri: http://iase.disa.mil
+# -----------------
 PG_VERSION = attribute(
   'pg_version',
-  description: "The version of postgres",
+  description: 'The version of postgres'
 )
 
 PG_SHARED_DIRS = attribute(
   'pg_shared_dirs',
-  description: 'defines the locations of the postgresql shared library directories',
+  description: 'defines the locations of the postgresql shared library directories'
 )
 
-control "V-72901" do
+control 'V-72901' do
   title "Database software, including PostgreSQL configuration files, must be
   stored in dedicated directories separate from the host OS and other
   applications."
-  desc  "When dealing with change control issues, it should be noted, any
+  desc "When dealing with change control issues, it should be noted, any
   changes to the hardware, software, and/or firmware components of the
   information system and/or application can potentially have significant effects
   on the overall security of the system.
@@ -49,13 +46,13 @@ control "V-72901" do
   method that provides any level of separation of security context assists in
   the protection between applications."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000133-DB-000199"
-  tag "gid": "V-72901"
-  tag "rid": "SV-87553r1_rule"
-  tag "stig_id": "PGS9-00-003300"
-  tag "cci": ["CCI-001499"]
-  tag "nist": ["CM-5 (6)", "Rev_4"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000133-DB-000199'
+  tag "gid": 'V-72901'
+  tag "rid": 'SV-87553r1_rule'
+  tag "stig_id": 'PGS9-00-003300'
+  tag "cci": ['CCI-001499']
+  tag "nist": ['CM-5 (6)', 'Rev_4']
   tag "check": "Review the PostgreSQL software library directory and any
   subdirectories.
   If any non-PostgreSQL software directories exist on the disk directory,

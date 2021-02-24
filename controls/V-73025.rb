@@ -1,45 +1,42 @@
-# encoding: utf-8
 #
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
-
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
+# -----------------
+# Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
+# Status: Accepted
+#
+# This Security Technical Implementation Guide is published as a tool to improve
+# the security of Department of Defense (DoD) information systems. The
+# requirements are derived from the National Institute of Standards and
+# Technology (NIST) 800-53 and related documents. Comments or proposed revisions
+# to this document should be sent via email to the following address:
+# disa.stig_spt@mail.mil.
+#
+# Release Date: 2017-01-20
+# Version: 1
+# Publisher: DISA
+# Source: STIG.DOD.MIL
+# uri: http://iase.disa.mil
+# -----------------
 PG_DBA = attribute(
   'pg_dba',
-  description: 'The postgres DBA user to access the test database',
+  description: 'The postgres DBA user to access the test database'
 )
 
 PG_DBA_PASSWORD = attribute(
   'pg_dba_password',
-  description: 'The password for the postgres DBA user',
+  description: 'The password for the postgres DBA user'
 )
 
 PG_DB = attribute(
   'pg_db',
-  description: 'The database used for tests',
+  description: 'The database used for tests'
 )
 
 PG_HOST = attribute(
   'pg_host',
-  description: 'The hostname or IP address used to connect to the database',
+  description: 'The hostname or IP address used to connect to the database'
 )
 
-control "V-73025" do
+control 'V-73025' do
   title "PostgreSQL must provide the means for individuals in authorized roles to
 change the auditing to be performed on all application components, based on all
 selectable event criteria within organization-defined time thresholds."
@@ -54,13 +51,13 @@ auditing may be limited to a specific set of events to facilitate audit reductio
 analysis, and reporting. Organizations can establish time thresholds in which audit
 actions are changed, for example, near real time, within minutes, or within hours."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000353-DB-000324"
-  tag "gid": "V-73025"
-  tag "rid": "SV-87677r1_rule"
-  tag "stig_id": "PGS9-00-010000"
-  tag "cci": ["CCI-001914"]
-  tag "nist": ["AU-12 (3)", "Rev_4"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000353-DB-000324'
+  tag "gid": 'V-73025'
+  tag "rid": 'SV-87677r1_rule'
+  tag "stig_id": 'PGS9-00-010000'
+  tag "cci": ['CCI-001914']
+  tag "nist": ['AU-12 (3)', 'Rev_4']
   tag "check": "First, as the database administrator, check if pgaudit is present in
 shared_preload_libraries:
 

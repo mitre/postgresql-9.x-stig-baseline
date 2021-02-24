@@ -1,45 +1,42 @@
-# encoding: utf-8
 #
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
-
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
+# -----------------
+# Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
+# Status: Accepted
+#
+# This Security Technical Implementation Guide is published as a tool to improve
+# the security of Department of Defense (DoD) information systems. The
+# requirements are derived from the National Institute of Standards and
+# Technology (NIST) 800-53 and related documents. Comments or proposed revisions
+# to this document should be sent via email to the following address:
+# disa.stig_spt@mail.mil.
+#
+# Release Date: 2017-01-20
+# Version: 1
+# Publisher: DISA
+# Source: STIG.DOD.MIL
+# uri: http://iase.disa.mil
+# -----------------
 PG_DBA = attribute(
   'pg_dba',
-  description: 'The postgres DBA user to access the test database',
+  description: 'The postgres DBA user to access the test database'
 )
 
 PG_DBA_PASSWORD = attribute(
   'pg_dba_password',
-  description: 'The password for the postgres DBA user',
+  description: 'The password for the postgres DBA user'
 )
 
 PG_DB = attribute(
   'pg_db',
-  description: 'The database used for tests',
+  description: 'The database used for tests'
 )
 
 PG_HOST = attribute(
   'pg_host',
-  description: 'The hostname or IP address used to connect to the database',
+  description: 'The hostname or IP address used to connect to the database'
 )
 
-control "V-73019" do
+control 'V-73019' do
   title "PostgreSQL must protect against a user falsely repudiating having performed
 organization-defined actions."
   desc  "Non-repudiation of actions taken is required in order to maintain data
@@ -58,13 +55,13 @@ implementation also must ensure that applications pass individual user
 identification to PostgreSQL, even where the application connects to PostgreSQL with
 a standard, shared account."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000080-DB-000063"
-  tag "gid": "V-73019"
-  tag "rid": "SV-87671r1_rule"
-  tag "stig_id": "PGS9-00-009700"
-  tag "cci": ["CCI-000166"]
-  tag "nist": ["AU-10", "Rev_4"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000080-DB-000063'
+  tag "gid": 'V-73019'
+  tag "rid": 'SV-87671r1_rule'
+  tag "stig_id": 'PGS9-00-009700'
+  tag "cci": ['CCI-000166']
+  tag "nist": %w(AU-10 Rev_4)
   tag "check": "First, as the database administrator, review the current
 log_line_prefix settings by running the following SQL:
 

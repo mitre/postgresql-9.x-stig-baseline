@@ -1,26 +1,23 @@
-# encoding: utf-8
 #
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
+# -----------------
+# Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
+# Status: Accepted
+#
+# This Security Technical Implementation Guide is published as a tool to improve
+# the security of Department of Defense (DoD) information systems. The
+# requirements are derived from the National Institute of Standards and
+# Technology (NIST) 800-53 and related documents. Comments or proposed revisions
+# to this document should be sent via email to the following address:
+# disa.stig_spt@mail.mil.
+#
+# Release Date: 2017-01-20
+# Version: 1
+# Publisher: DISA
+# Source: STIG.DOD.MIL
+# uri: http://iase.disa.mil
+# -----------------
 
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
-
-control "V-73045" do
+control 'V-73045' do
   title "PostgreSQL must off-load audit data to a separate log management facility;
 this must be continuous and in near real time for systems with a network connection
 to the storage facility and weekly or more often for stand-alone systems."
@@ -35,13 +32,13 @@ to other kinds of local repository, or directly to a centralized log management
 system. Whatever the method used, it must be compatible with off-loading the records
 to the centralized system."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000515-DB-000318"
-  tag "gid": "V-73045"
-  tag "rid": "SV-87697r1_rule"
-  tag "stig_id": "PGS9-00-011300"
-  tag "cci": ["CCI-001851"]
-  tag "nist": ["AU-4 (1)", "Rev_4"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000515-DB-000318'
+  tag "gid": 'V-73045'
+  tag "rid": 'SV-87697r1_rule'
+  tag "stig_id": 'PGS9-00-011300'
+  tag "cci": ['CCI-001851']
+  tag "nist": ['AU-4 (1)', 'Rev_4']
   tag "check": "First, as the database administrator (shown here as \"postgres\"),
 ensure PostgreSQL uses syslog by running the following SQL:
 
@@ -97,5 +94,4 @@ $ sudo systemctl reload postgresql-9.5
 $ sudo service postgresql-9.5 reload"
 
   only_if { false }
-
 end

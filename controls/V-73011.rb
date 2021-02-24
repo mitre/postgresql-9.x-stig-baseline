@@ -1,26 +1,23 @@
-# encoding: utf-8
 #
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
+# -----------------
+# Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
+# Status: Accepted
+#
+# This Security Technical Implementation Guide is published as a tool to improve
+# the security of Department of Defense (DoD) information systems. The
+# requirements are derived from the National Institute of Standards and
+# Technology (NIST) 800-53 and related documents. Comments or proposed revisions
+# to this document should be sent via email to the following address:
+# disa.stig_spt@mail.mil.
+#
+# Release Date: 2017-01-20
+# Version: 1
+# Publisher: DISA
+# Source: STIG.DOD.MIL
+# uri: http://iase.disa.mil
+# -----------------
 
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
-
-control "V-73011" do
+control 'V-73011' do
   title "Unused database components which are integrated in PostgreSQL and cannot be
 uninstalled must be disabled."
   desc  "Information systems are capable of providing a wide variety of functions
@@ -43,13 +40,13 @@ product, OS and the nature of the component and may include DBMS configuration
 settings, OS service settings, OS file access security, and DBMS user/role
 permissions."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000141-DB-000092"
-  tag "gid": "V-73011"
-  tag "rid": "SV-87663r1_rule"
-  tag "stig_id": "PGS9-00-009200"
-  tag "cci": ["CCI-000381"]
-  tag "nist": ["CM-7 a", "Rev_4"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000141-DB-000092'
+  tag "gid": 'V-73011'
+  tag "rid": 'SV-87663r1_rule'
+  tag "stig_id": 'PGS9-00-009200'
+  tag "cci": ['CCI-000381']
+  tag "nist": ['CM-7 a', 'Rev_4']
   tag "check": "To list all installed packages, as the system administrator, run the
 following:
 
@@ -69,9 +66,8 @@ $ sudo yum erase <package_name>
 # Debian Systems
 $ sudo apt-get remove <package_name>"
 
-# @todo how do I identify the packages that are not required for the current OS? need datafile of approved?
-# @todo assume need two tests, one for RHEL/CENT, and one for Debian?
+  # @todo how do I identify the packages that are not required for the current OS? need datafile of approved?
+  # @todo assume need two tests, one for RHEL/CENT, and one for Debian?
 
   only_if { false }
-
 end

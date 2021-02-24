@@ -1,26 +1,23 @@
-# encoding: utf-8
 #
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
+# -----------------
+# Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
+# Status: Accepted
+#
+# This Security Technical Implementation Guide is published as a tool to improve
+# the security of Department of Defense (DoD) information systems. The
+# requirements are derived from the National Institute of Standards and
+# Technology (NIST) 800-53 and related documents. Comments or proposed revisions
+# to this document should be sent via email to the following address:
+# disa.stig_spt@mail.mil.
+#
+# Release Date: 2017-01-20
+# Version: 1
+# Publisher: DISA
+# Source: STIG.DOD.MIL
+# uri: http://iase.disa.mil
+# -----------------
 
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
-
-control "V-72873" do
+control 'V-72873' do
   title "PostgreSQL and associated applications must reserve the use of dynamic
   code execution for situations that require it."
   desc  "With respect to database management systems, one class of threat is
@@ -48,13 +45,13 @@ control "V-72873" do
   to obtain assurances from the development organization that this issue has
   been addressed, and must document what has been discovered."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000251-DB-000391"
-  tag "gid": "V-72873"
-  tag "rid": "SV-87525r1_rule"
-  tag "stig_id": "PGS9-00-001900"
-  tag "cci": ["CCI-001310"]
-  tag "nist": ["SI-10", "Rev_4"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000251-DB-000391'
+  tag "gid": 'V-72873'
+  tag "rid": 'SV-87525r1_rule'
+  tag "stig_id": 'PGS9-00-001900'
+  tag "cci": ['CCI-001310']
+  tag "nist": %w(SI-10 Rev_4)
   tag "check": "Review PostgreSQL source code (trigger procedures, functions)
   and application source code, to identify cases of dynamic code execution. Any
   user input should be handled through prepared statements.
@@ -66,5 +63,4 @@ control "V-72873" do
   typed parameters, modify the code to do so."
 
   only_if { false }
-  
 end

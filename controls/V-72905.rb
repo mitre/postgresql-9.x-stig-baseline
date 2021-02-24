@@ -1,45 +1,42 @@
-# encoding: utf-8
 #
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
-
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
+# -----------------
+# Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
+# Status: Accepted
+#
+# This Security Technical Implementation Guide is published as a tool to improve
+# the security of Department of Defense (DoD) information systems. The
+# requirements are derived from the National Institute of Standards and
+# Technology (NIST) 800-53 and related documents. Comments or proposed revisions
+# to this document should be sent via email to the following address:
+# disa.stig_spt@mail.mil.
+#
+# Release Date: 2017-01-20
+# Version: 1
+# Publisher: DISA
+# Source: STIG.DOD.MIL
+# uri: http://iase.disa.mil
+# -----------------
 PG_DBA = attribute(
   'pg_dba',
-  description: 'The postgres DBA user to access the test database',
+  description: 'The postgres DBA user to access the test database'
 )
 
 PG_DBA_PASSWORD = attribute(
   'pg_dba_password',
-  description: 'The password for the postgres DBA user',
+  description: 'The password for the postgres DBA user'
 )
 
 PG_DB = attribute(
   'pg_db',
-  description: 'The database used for tests',
+  description: 'The database used for tests'
 )
 
 PG_HOST = attribute(
   'pg_host',
-  description: 'The hostname or IP address used to connect to the database',
+  description: 'The hostname or IP address used to connect to the database'
 )
 
-control "V-72905" do
+control 'V-72905' do
   title "Execution of software modules (to include functions and trigger
   procedures) with elevated privileges must be restricted to necessary cases
   only."
@@ -61,13 +58,13 @@ control "V-72905" do
   the DBA must attempt to obtain assurances from the development organization
   that this issue has been addressed, and must document what has been discovered."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000342-DB-000302"
-  tag "gid": "V-72905"
-  tag "rid": "SV-87557r1_rule"
-  tag "stig_id": "PGS9-00-003600"
-  tag "cci": ["CCI-002233"]
-  tag "nist": ["AC-6 (8)", "Rev_4"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000342-DB-000302'
+  tag "gid": 'V-72905'
+  tag "rid": 'SV-87557r1_rule'
+  tag "stig_id": 'PGS9-00-003600'
+  tag "cci": ['CCI-002233']
+  tag "nist": ['AC-6 (8)', 'Rev_4']
   tag "check": "Functions in PostgreSQL can be created with the SECURITY
   DEFINER option. When SECURITY DEFINER functions are executed by a user, said
   function is run with the privileges of the user who created it.
@@ -95,8 +92,8 @@ control "V-72905" do
 
   sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
 
-  security_definer_sql = "SELECT nspname, proname, prosecdef "\
-    "FROM pg_proc p JOIN pg_namespace n ON p.pronamespace = n.oid "\
+  security_definer_sql = 'SELECT nspname, proname, prosecdef '\
+    'FROM pg_proc p JOIN pg_namespace n ON p.pronamespace = n.oid '\
     "JOIN pg_authid a ON a.oid = p.proowner WHERE prosecdef = 't';"
 
   databases_sql = "SELECT datname FROM pg_catalog.pg_database where datname = '#{PG_DB}';"
@@ -105,10 +102,10 @@ control "V-72905" do
 
   databases.each do |database|
     connection_error = "FATAL:\\s+database \"#{database}\" is not currently "\
-      "accepting connections"
+      'accepting connections'
     connection_error_regex = Regexp.new(connection_error)
 
-    sql_result=sql.query(security_definer_sql, [database])
+    sql_result = sql.query(security_definer_sql, [database])
 
     describe.one do
       describe sql_result do

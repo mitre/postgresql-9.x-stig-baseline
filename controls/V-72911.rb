@@ -1,52 +1,49 @@
-# encoding: utf-8
 #
-=begin
------------------
-Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
-Status: Accepted
-
-This Security Technical Implementation Guide is published as a tool to improve
-the security of Department of Defense (DoD) information systems. The
-requirements are derived from the National Institute of Standards and
-Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-to this document should be sent via email to the following address:
-disa.stig_spt@mail.mil.
-
-Release Date: 2017-01-20
-Version: 1
-Publisher: DISA
-Source: STIG.DOD.MIL
-uri: http://iase.disa.mil
------------------
-=end
+# -----------------
+# Benchmark: PostgreSQL 9.x Security Technical Implementation Guide
+# Status: Accepted
+#
+# This Security Technical Implementation Guide is published as a tool to improve
+# the security of Department of Defense (DoD) information systems. The
+# requirements are derived from the National Institute of Standards and
+# Technology (NIST) 800-53 and related documents. Comments or proposed revisions
+# to this document should be sent via email to the following address:
+# disa.stig_spt@mail.mil.
+#
+# Release Date: 2017-01-20
+# Version: 1
+# Publisher: DISA
+# Source: STIG.DOD.MIL
+# uri: http://iase.disa.mil
+# -----------------
 PG_OWNER = attribute(
   'pg_owner',
-  description: "The system user of the postgres process",
+  description: 'The system user of the postgres process'
 )
 
 PG_DBA = attribute(
   'pg_dba',
-  description: 'The postgres DBA user to access the test database',
+  description: 'The postgres DBA user to access the test database'
 )
 
 PG_DBA_PASSWORD = attribute(
   'pg_dba_password',
-  description: 'The password for the postgres DBA user',
+  description: 'The password for the postgres DBA user'
 )
 
 PG_DB = attribute(
   'pg_db',
-  description: 'The database used for tests',
+  description: 'The database used for tests'
 )
 
 PG_HOST = attribute(
   'pg_host',
-  description: 'The hostname or IP address used to connect to the database',
+  description: 'The hostname or IP address used to connect to the database'
 )
 
 PG_SUPERUSERS = attribute(
   'pg_superusers',
-  description: 'Authorized superuser accounts',
+  description: 'Authorized superuser accounts'
 )
 
 PG_OBJECT_GRANTED_PRIVILEGES = attribute(
@@ -67,8 +64,8 @@ PG_OBJECT_EXCEPTIONS = attribute(
   default: ['pg_settings']
 )
 
-control "V-72911" do
-  title "PostgreSQL must isolate security functions from non-security functions."
+control 'V-72911' do
+  title 'PostgreSQL must isolate security functions from non-security functions.'
   desc  "An isolation boundary provides access control and protects the integrity
   of the hardware, software, and firmware that perform security functions.
   Security functions are the hardware, software, and/or firmware of the
@@ -85,13 +82,13 @@ control "V-72911" do
   functionality are commingled, users who have access to non-security
   functionality may be able to access security functionality."
   impact 0.5
-  tag "severity": "medium"
-  tag "gtitle": "SRG-APP-000233-DB-000124"
-  tag "gid": "V-72911"
-  tag "rid": "SV-87563r1_rule"
-  tag "stig_id": "PGS9-00-004000"
-  tag "cci": ["CCI-001084"]
-  tag "nist": ["SC-3", "Rev_4"]
+  tag "severity": 'medium'
+  tag "gtitle": 'SRG-APP-000233-DB-000124'
+  tag "gid": 'V-72911'
+  tag "rid": 'SV-87563r1_rule'
+  tag "stig_id": 'PGS9-00-004000'
+  tag "cci": ['CCI-001084']
+  tag "nist": %w(SC-3 Rev_4)
   tag "check": "Check PostgreSQL settings to determine whether objects or code
   implementing security functionality are located in a separate security domain,
   such as a separate database or schema created specifically for security
@@ -134,13 +131,13 @@ Repeat using \\df+*.* to review ownership of
   exceptions = "#{PG_OBJECT_EXCEPTIONS.map { |e| "'#{e}'" }.join(',')}"
   object_acl = "^(((#{PG_OWNER}=[#{PG_OBJECT_GRANTED_PRIVILEGES}]+|"\
     "=[#{PG_OBJECT_PUBLIC_PRIVILEGES}]+)\\/\\w+,?)+|)$"
-  schemas = ['pg_catalog', 'information_schema']
+  schemas = %w(pg_catalog information_schema)
   sql = postgres_session(PG_DBA, PG_DBA_PASSWORD, PG_HOST)
 
   schemas.each do |schema|
-    objects_sql = "SELECT n.nspname, c.relname, c.relkind, "\
+    objects_sql = 'SELECT n.nspname, c.relname, c.relkind, '\
       "pg_catalog.array_to_string(c.relacl, E',') FROM pg_catalog.pg_class c "\
-      "LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace "\
+      'LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace '\
       "WHERE c.relkind IN ('r', 'v', 'm', 'S', 'f') "\
       "AND n.nspname ~ '^(#{schema})$' "\
       "AND pg_catalog.array_to_string(c.relacl, E',') !~ '#{object_acl}' "\
@@ -150,10 +147,10 @@ Repeat using \\df+*.* to review ownership of
       its('output') { should eq '' }
     end
 
-    functions_sql = "SELECT n.nspname, p.proname, "\
-      "pg_catalog.pg_get_userbyid(n.nspowner) "\
-      "FROM pg_catalog.pg_proc p "\
-      "LEFT JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace "\
+    functions_sql = 'SELECT n.nspname, p.proname, '\
+      'pg_catalog.pg_get_userbyid(n.nspowner) '\
+      'FROM pg_catalog.pg_proc p '\
+      'LEFT JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace '\
       "WHERE n.nspname ~ '^(#{schema})$' "\
       "AND pg_catalog.pg_get_userbyid(n.nspowner) <> '#{PG_OWNER}';"
 
