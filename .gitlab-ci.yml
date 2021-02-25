@@ -1,6 +1,6 @@
 include:
 - project: stig/inspec-scanning-integration
-  ref: 1.1.8
+  ref: 1.1.11
   file: templates/templates.yml
 
 before_script:
@@ -24,6 +24,14 @@ exec PostgreSQL_9.X:
     TARGET: 'rep.dsolab.io/baselines/postgres9.6_baseline:1.0'
 
 publish PostgreSQL_9.X:
-  extends: .ci:stage:publish:inspec
+  extends: .ci:stage:publish:inspec:artifacts
   dependencies:
+  - check PostgreSQL_9.X
+  - lint PostgreSQL_9.X
   - exec PostgreSQL_9.X
+
+sync:
+  extends: .ci:stage:publish:inspec:sync
+  variables:
+    SYNC_REPO: "repo1.dso.mil/disa/inspec/oracle/19c.git"
+    SYNC_TOKEN: $IR1_POSTGRES_9X
