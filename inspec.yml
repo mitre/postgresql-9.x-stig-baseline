@@ -1,0 +1,9 @@
+name: PostgreSQL_9-x_STIG
+title: PostgreSQL 9.x based upon the PostgreSQL 9-X Security Technical Implementation Guide
+maintainer: MITRE SAF Team
+copyright: MITRE, 2022
+copyright_email: saf@groups.mitre.org
+license: Apache-2.0
+summary: InSpec testing for baseline compliance with the PostgreSQL_9-x STIG
+version: 2.1.0
+inspec_version: ">= 4.0"
